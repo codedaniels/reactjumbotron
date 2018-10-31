@@ -17,9 +17,12 @@
         
         <script type="text/babel">
             var Jumbotron = React.createClass({
+                propTypes: {
+                    title: React.PropTypes.string.isRequired
+                },
                 getDefaultProps: function(){
                     return{
-                        title="This is the title",
+                        title="Hello, world!",
                         text="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.", 
                         link="http://eduonix.com" 
                     }
@@ -38,9 +41,7 @@
             });
 
             ReactDOM.render(
-                <Jumbotron 
-/>,
-
+                <Jumbotron />,
                 document.getElementById('jumbotron')
             );
         </script>
