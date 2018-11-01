@@ -29,13 +29,28 @@
                             <TodoList />
                         </div>
                     )
-                },
-                changeText: function (e) {
-                    this.setState({text: e.target.value});
                 }
             });
 
-           
+           var TodoForm = React.createClass({
+               render: function(){
+                   return(
+                       <div>
+                            TODOFORM
+                       </div>
+                   )
+               }
+           });
+
+           var TodoList = React.createClass({
+               render: function(){
+                   return(
+                       <div>
+                            TODOLIST
+                       </div>
+                   )
+               }
+           })
             // always use top as state and rest as props.
 
             ReactDOM.render(
