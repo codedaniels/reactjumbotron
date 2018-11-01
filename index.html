@@ -102,7 +102,7 @@
                        <ul className="list-group">
                             {
                                 this.props.todos.map(todo => {
-                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} <a className="delete" href="#">X</li>
+                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} <a conClick={this.onDelete.bind(this, todo)} className="delete" href="#">X</a></li>
                                 })
                             }
                        </ul>
