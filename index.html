@@ -5,6 +5,15 @@
         <script src="https://fb.me/react-0.14.7.js"></script>
         <script src="https://fb.me/react-dom-0.14.7.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser.min.js"></script>
+        <style>
+            body{
+                margin-top:30px;
+            }
+
+            a.delete{
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -19,16 +28,39 @@
             var App = React.createClass({
                 getInitialState: function() {
                     return {
-                        text: 'Hello World'
+                        text: '',
+                        todos: [
+                            {
+                                id: 1,
+                                text: 'Meeting at work',
+                            },
+                            {
+                                id: 2,
+                                text: 'Bring kids to school'
+                            },
+                            {
+                                id: 3,
+                                text: 'Food shopping'
+                            }
+                        ]
                     }
                 },
                 render: function(){
                     return(
                         <div>
-                            <TodoForm />
-                            <TodoList />
+                            <TodoForm onTodoAdd={this.handleTodoAdd} />
+                            <TodoList todos={this.state.todos} />
                         </div>
                     )
+                },
+
+                handleTodoAdd: function(text){
+                    var newTodo = {
+                        id: this.state.todos.length +1,
+                        text: text
+                    }
+
+                    this.setState({todos: this.state.todos.concat(newTodo)});
                 }
             });
 
@@ -36,18 +68,44 @@
                render: function(){
                    return(
                        <div>
-                            TODOFORM
+                            <form onSubmit={this.onSubmit}>
+                                <div className="form-group">
+                                    <label>Todo text</label>
+                                    <input className="form-control" type="text" ref="text" onChange={this.onChange}/>
+                                </div>
+                            </form>
                        </div>
                    )
+               },
+
+               onChange: function(){
+                   console.log('Changing text...')
+               },
+
+               onSubmit: function(e){
+                   e.preventDefault();
+                   var text = this.refs.text.value.trim();
+
+                   if(!text){
+                       alert('please enter a todo');
+                       return;
+                   }
+
+                   this.props.onTodoAdd(text);
+                   this.refs.text.value = '';
                }
            });
 
            var TodoList = React.createClass({
                render: function(){
                    return(
-                       <div>
-                            TODOLIST
-                       </div>
+                       <ul className="list-group">
+                            {
+                                this.props.todos.map(todo => {
+                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} <a className="delete" href="#">X</li>
+                                })
+                            }
+                       </ul>
                    )
                }
            })
