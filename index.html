@@ -17,13 +17,22 @@
         
         <script type="text/babel">
             var App = React.createClass({
+                getInitialState: function() {
+                    return {
+                        text: 'Hello World'
+                    }
+                },
                 render: function(){
                     return(
                         <div>
-                            MYAPP
+                            <h1>{this.state.text}</h1>
+                            <button onClick={this.changeText} className="btn btn-primary">Click</button>
                         </div>
                     )
                 },
+                changeText: function () {
+                    this.setState({text: 'Welcome To My App'})
+                }
             });
 
             ReactDOM.render(
