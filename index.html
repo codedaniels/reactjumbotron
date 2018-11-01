@@ -25,13 +25,8 @@
                 render: function(){
                     return(
                         <div>
-                            <h1>{this.state.text}</h1>
-                            <form>
-                                <input type="text" onChange={this.changeText} value={this.state.text} />
-                                <button className="btn btn-primary">Click</button>
-                            </form>
-                            <br />
-                            <ComponentTwo text={this.state.text}/>
+                            <TodoForm />
+                            <TodoList />
                         </div>
                     )
                 },
@@ -40,15 +35,7 @@
                 }
             });
 
-            var ComponentTwo = React.createClass({
-                render: function(){
-                    return(
-                        <div>
-                            {this.props.text}
-                        </div>
-                    );
-                }
-            });
+           
             // always use top as state and rest as props.
 
             ReactDOM.render(
