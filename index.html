@@ -52,6 +52,7 @@
                             <TodoForm 
                             {...this.state}
                             changeText={this.handleChangeText}
+                            onTodoUpdate={this.handleTodoUpdate}
                             onTodoAdd={this.handleTodoAdd}/>
 
                             <TodoList 
@@ -90,6 +91,17 @@
 
                 handleChangeText: function(text){
                     this.setState({text: text});
+                },
+
+                handleTodoUpdate: function(todo){
+                    var todos = this.state.todos;
+                    for(var i = 0; i < todos.length; i++){
+                        if(todos[i].id == todo.id){
+                            todos.splice(i,1);
+                        }
+                    }
+                    todos.push(todo);
+                    this.setState({todos: todos});
                 }
             });
 
@@ -119,8 +131,18 @@
                        alert('please enter a todo');
                        return;
                    }
+                   
+                   if(this.props.isEdit){
+                       var updatedTodo = {
+                           id: this.props.isEdit,
+                           text: text
+                       }
+                       this.props.onTodoUpdate(updatedTodo);
 
-                   this.props.onTodoAdd(text);
+                   } else {
+                    this.props.onTodoAdd(text);
+
+                   }
                    this.refs.text.value = '';
                }
            });
