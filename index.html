@@ -102,13 +102,21 @@
                        <ul className="list-group">
                             {
                                 this.props.todos.map(todo => {
-                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} <a conClick={this.onDelete.bind(this, todo)} className="delete" href="#">X</a></li>
+                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} 
+                                                <a onClick={this.onDelete.bind(this, todo)} className="delete" href="#">
+                                                X
+                                                </a>
+                                            </li>
                                 })
                             }
                        </ul>
                    )
+               },
+
+               onDelete(todo){
+                   this.props.deleteTodo(todo);
                }
-           })
+           });
             // always use top as state and rest as props.
 
             ReactDOM.render(
