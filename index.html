@@ -26,14 +26,30 @@
                     return(
                         <div>
                             <h1>{this.state.text}</h1>
-                            <button onClick={this.changeText} className="btn btn-primary">Click</button>
+                            <form>
+                                <input type="text" onChange={this.changeText} value={this.state.text} />
+                                <button className="btn btn-primary">Click</button>
+                            </form>
+                            <br />
+                            <ComponentTwo text={this.state.text}/>
                         </div>
                     )
                 },
-                changeText: function () {
-                    this.setState({text: 'Welcome To My App'})
+                changeText: function (e) {
+                    this.setState({text: e.target.value});
                 }
             });
+
+            var ComponentTwo = React.createClass({
+                render: function(){
+                    return(
+                        <div>
+                            {this.props.text}
+                        </div>
+                    );
+                }
+            });
+            // always use top as state and rest as props.
 
             ReactDOM.render(
                 <App />,
