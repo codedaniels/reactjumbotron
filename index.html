@@ -29,6 +29,7 @@
                 getInitialState: function() {
                     return {
                         text: '',
+                        isEdit: 0,
                         todos: [
                             {
                                 id: 1,
@@ -48,8 +49,15 @@
                 render: function(){
                     return(
                         <div>
-                            <TodoForm onTodoAdd={this.handleTodoAdd} />
-                            <TodoList todos={this.state.todos} deleteTodo={this.handleTodoDelete}/>
+                            <TodoForm 
+                            {...this.state}
+                            changeText={this.handleChangeText}
+                            onTodoAdd={this.handleTodoAdd}/>
+
+                            <TodoList 
+                            {...this.state}
+                            editTodo={this.handleTodoEdit}
+                            deleteTodo={this.handleTodoDelete}/>
                         </div>
                     )
                 },
@@ -71,6 +79,17 @@
                         }
                     }
                     this.setState({todos: todos});
+                },
+
+                handleTodoEdit: function(todo){
+                    this.setState({
+                        text: todo.text,
+                        isEdit: todo.id
+                    });
+                },
+
+                handleChangeText: function(text){
+                    this.setState({text: text});
                 }
             });
 
@@ -81,15 +100,15 @@
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label>Todo text</label>
-                                    <input className="form-control" type="text" ref="text" onChange={this.onChange}/>
+                                    <input className="form-control" type="text" ref="text" value={this.props.text} onChange={this.onChange}/>
                                 </div>
                             </form>
                        </div>
                    )
                },
 
-               onChange: function(){
-                   console.log('Changing text...')
+               onChange: function(e){
+                    this.props.changeText(e.target.value);
                },
 
                onSubmit: function(e){
@@ -112,7 +131,8 @@
                        <ul className="list-group">
                             {
                                 this.props.todos.map(todo => {
-                                    return <li className="list-group-item" todo={todo} key={todo.id}>{todo.text} 
+                                    return <li className="list-group-item" todo={todo} key={todo.id}>
+                                                <span onClick={this.editTodo.bind(this, todo)}>{todo.text} </span>
                                                 <a onClick={this.onDelete.bind(this, todo)} className="delete" href="#">
                                                 X
                                                 </a>
@@ -123,8 +143,12 @@
                    )
                },
 
-               onDelete(todo){
+               onDelete: function(todo){
                    this.props.deleteTodo(todo);
+               },
+
+               editTodo: function(todo){
+                   this.props.editTodo(todo)
                }
            });
             // always use top as state and rest as props.
